@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'login-screen.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -27,12 +29,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  loginPressed(isRegister) {
+    print(isRegister);
+    Navigator.push(
+      context,
+      new MaterialPageRoute(
+        builder: (contex) => new LoginScreen(
+          isRegister,
+        ),
+      ),
+    );
   }
 
   @override
@@ -46,19 +52,18 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'You have pushed the button this many times:',
+              'Zaloguj się, aby rozpocząć.\nJeśli nie masz konta, użyj adresu email do rejestracji.',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            ElevatedButton(
+              onPressed: () => loginPressed(false),
+              child: Text('Zaloguj'),
+            ),
+            ElevatedButton(
+              onPressed: () => loginPressed(true),
+              child: Text('Rejestracja'),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
       ),
     );
   }
