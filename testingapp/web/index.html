@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -20,15 +21,16 @@
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="testingapp">
+  <meta name="apple-mobile-web-app-title" content="testing">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
-  <title>testingapp</title>
+  <title>testing</title>
   <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
@@ -40,6 +42,29 @@
       });
     }
   </script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-auth.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyAuvNZRNv2902S8wLh9TYfZWNqsLk4Peuk",
+      authDomain: "testing-3f2b0.firebaseapp.com",
+      projectId: "testing-3f2b0",
+      storageBucket: "testing-3f2b0.appspot.com",
+      messagingSenderId: "539553017331",
+      appId: "1:539553017331:web:f2b176a4cb4d56c9523686",
+      measurementId: "G-8C85JB5B39"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
   <script src="main.dart.js" type="application/javascript"></script>
 </body>
+
 </html>
