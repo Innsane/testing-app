@@ -93,12 +93,9 @@ class _RegisterState extends State<Register> {
                       await FirebaseAuth.instance
                           .createUserWithEmailAndPassword(
                               email: emailInput, password: passwordInput);
-                      Navigator.push(
-                        context,
-                        new MaterialPageRoute(
-                          builder: (contex) => new TodoScreen(),
-                        ),
-                      );
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => TodoScreen()),
+                          (Route<dynamic> route) => false);
                     } on FirebaseAuthException catch (e) {
                       isError = true;
                       if (e.code == 'weak-password') {
@@ -151,6 +148,11 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  var isError = false;
+  var errorMessage = '';
+  var emailInput = '';
+  var passwordInput = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,11 +166,27 @@ class _LoginState extends State<Login> {
           children: <Widget>[
             TextFormField(
               decoration: const InputDecoration(
-                hintText: 'Enter your email',
+                hintText: 'Adres email',
               ),
-              validator: (String value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
+              validator: (String email) {
+                emailInput = email;
+                if (email == null || email.isEmpty) {
+                  return 'Email nie może być pusty.';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Hasło',
+              ),
+              validator: (String password) {
+                passwordInput = password;
+                if (password == null || password.isEmpty) {
+                  return 'Hasło nie może być puste.';
+                }
+                if (password.length < 6) {
+                  return 'Hasło musi mieć co najmniej 6 znaków.';
                 }
                 return null;
               },
@@ -176,15 +194,50 @@ class _LoginState extends State<Login> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: ElevatedButton(
-                onPressed: () {
-                  // Validate will return true if the form is valid, or false if
-                  // the form is invalid.
+                onPressed: () async {
                   if (_formKey.currentState.validate()) {
-                    // Process data.
+                    try {
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          email: emailInput, password: passwordInput);
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => TodoScreen()),
+                          (Route<dynamic> route) => false);
+                    } on FirebaseAuthException catch (e) {
+                      isError = true;
+                      print(e.code);
+                      if (e.code == 'user-not-found') {
+                        setState(() {
+                          errorMessage =
+                              'Nie znaleziono użytkownika z tym adresem.';
+                        });
+                      } else if (e.code == 'wrong-password') {
+                        setState(() {
+                          errorMessage = 'Podane hasło jest nieprawidłowe.';
+                        });
+                      } else if (e.code == 'invalid-email') {
+                        setState(() {
+                          errorMessage =
+                              'Format adresu email jest nieprawidłowy.';
+                        });
+                      } else {
+                        setState(() {
+                          errorMessage =
+                              'Wystąpił nieoczekiwany błąd:' + e.code;
+                        });
+                      }
+                    } catch (e) {
+                      setState(() {
+                        isError = true;
+                        errorMessage = 'Wystąpił nieoczekiwany błąd:' + e.code;
+                      });
+                    }
                   }
                 },
                 child: const Text('Submit'),
               ),
+            ),
+            Column(
+              children: [isError ? Text(errorMessage) : Text('')],
             ),
           ],
         ),
