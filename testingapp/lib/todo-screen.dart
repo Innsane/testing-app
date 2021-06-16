@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+var _globalShoppingLists = [];
+var _globalShopingListsElements = [];
+final _biggerFont = TextStyle(fontSize: 18.0, color: Colors.white);
+
 class TodoScreen extends StatefulWidget {
   const TodoScreen({Key key}) : super(key: key);
 
@@ -9,12 +13,85 @@ class TodoScreen extends StatefulWidget {
 }
 
 class _TodoScreenState extends State<TodoScreen> {
-  void _addNewList() {
-    print('add new list');
+  final _wordController = TextEditingController();
+  void listClicked(dynamic index) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (BuildContext context) {
-          return NewListBuilder();
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(_globalShoppingLists[index]),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    print('delete');
+                  },
+                ),
+              ],
+            ),
+            body: Container(
+              color: Colors.grey[900],
+              child: ListView.builder(
+                itemCount: _globalShopingListsElements[index].length,
+                itemBuilder: (context, elementsIndex) => ListTile(
+                  trailing: Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                  onTap: () {
+                    // edytuj
+                  },
+                  tileColor: Colors.grey[900],
+                  title: Text(
+                    _globalShopingListsElements[index][elementsIndex],
+                    style: _biggerFont,
+                  ),
+                ),
+              ),
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Dodaj składni do kupienia'),
+                        content: SizedBox(
+                          height: 120,
+                          child: Column(
+                            children: [
+                              TextField(
+                                controller: _wordController,
+                                decoration:
+                                    InputDecoration(hintText: 'Np. Kiełbasa'),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(
+                                  top: 15,
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _globalShopingListsElements[index]
+                                          .add(_wordController.text);
+                                    });
+                                    Navigator.of(context).pop();
+                                    _wordController.clear();
+                                  },
+                                  child: Text('Dodaj'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    });
+              },
+              child: Icon(Icons.add, color: Colors.grey[900]),
+              backgroundColor: Colors.pink,
+            ),
+          );
         },
       ),
     );
@@ -22,52 +99,34 @@ class _TodoScreenState extends State<TodoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _wordController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Todo List'),
+        title: Text('Lista zakupów'),
         actions: [
-          IconButton(icon: Icon(Icons.add), onPressed: _addNewList),
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: () {
+              print('saved');
+            },
+          ),
         ],
-      ),
-      body: Text('Zalogowany'),
-    );
-  }
-}
-
-class NewListBuilder extends StatefulWidget {
-  const NewListBuilder({Key key}) : super(key: key);
-
-  @override
-  _CustomListState createState() => _CustomListState();
-}
-
-class _CustomListState extends State<NewListBuilder> {
-  final _wordController = TextEditingController();
-  final List<String> _customWordList = [];
-  final _biggerFont = TextStyle(fontSize: 18.0, color: Colors.black);
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Create a new list'),
       ),
       body: Container(
         color: Colors.grey[900],
         child: ListView.builder(
-          itemCount: _customWordList.length,
+          itemCount: _globalShoppingLists.length,
           itemBuilder: (context, index) => ListTile(
             trailing: Icon(
-              Icons.delete,
+              Icons.edit,
               color: Colors.red,
             ),
             onTap: () {
-              setState(() {
-                _customWordList.remove(_customWordList[index]);
-              });
+              listClicked(index);
             },
             tileColor: Colors.grey[900],
             title: Text(
-              _customWordList[index],
+              _globalShoppingLists[index],
               style: _biggerFont,
             ),
           ),
@@ -79,14 +138,14 @@ class _CustomListState extends State<NewListBuilder> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text('Add a custom word'),
+                  title: Text('Ustaw tytuł listy'),
                   content: SizedBox(
                     height: 120,
                     child: Column(
                       children: [
                         TextField(
                           controller: _wordController,
-                          decoration: InputDecoration(hintText: 'Type here...'),
+                          decoration: InputDecoration(hintText: 'Np. Grill'),
                         ),
                         Container(
                           padding: EdgeInsets.only(
@@ -95,12 +154,13 @@ class _CustomListState extends State<NewListBuilder> {
                           child: ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                _customWordList.add(_wordController.text);
+                                _globalShoppingLists.add(_wordController.text);
+                                _globalShopingListsElements.add([]);
                               });
                               Navigator.of(context).pop();
                               _wordController.clear();
                             },
-                            child: Text('Add'),
+                            child: Text('Stwórz'),
                           ),
                         ),
                       ],
