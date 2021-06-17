@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'shopping-lists-screen.dart';
@@ -35,17 +36,26 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF1F1F1F),
       appBar: AppBar(
         title: Text('Rejestracja'),
       ),
       body: Form(
         key: _formKey,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            new Padding(padding: EdgeInsets.all(10)),
             TextFormField(
-              decoration: const InputDecoration(
+              style: TextStyle(color: Colors.green),
+              decoration: new InputDecoration(
                 hintText: 'Wprowadź adres email',
+                hintStyle: TextStyle(color: Colors.green),
+                border: new OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(25.0),
+                  borderSide: new BorderSide(
+                  ),
+                ),
               ),
               validator: (String emailValue) {
                 emailInput = emailValue;
@@ -55,9 +65,17 @@ class _RegisterState extends State<Register> {
                 return null;
               },
             ),
+            new Padding(padding: EdgeInsets.all(10)),
             TextFormField(
-              decoration: const InputDecoration(
+              style: TextStyle(color: Colors.green),
+              decoration: new InputDecoration(
                 hintText: 'Wprowadź hasło',
+                hintStyle: TextStyle(color: Colors.green),
+                border: new OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(25.0),
+                  borderSide: new BorderSide(
+                  ),
+                ),
               ),
               validator: (String passwordValue) {
                 passwordInput = passwordValue;
@@ -70,9 +88,17 @@ class _RegisterState extends State<Register> {
                 return null;
               },
             ),
+            new Padding(padding: EdgeInsets.all(10)),
             TextFormField(
-              decoration: const InputDecoration(
+              style: TextStyle(color: Colors.green),
+              decoration: new InputDecoration(
                 hintText: 'Powtórz hasło',
+                hintStyle: TextStyle(color: Colors.green),
+                border: new OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(25.0),
+                  borderSide: new BorderSide(
+                  ),
+                ),
               ),
               validator: (String passwordCheckValue) {
                 if (passwordCheckValue == null || passwordCheckValue.isEmpty) {
@@ -85,7 +111,7 @@ class _RegisterState extends State<Register> {
               },
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
@@ -157,17 +183,26 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF1F1F1F),
       appBar: AppBar(
         title: Text('Login'),
       ),
       body: Form(
         key: _formKey,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            new Padding(padding: EdgeInsets.all(10)),
             TextFormField(
-              decoration: const InputDecoration(
+              style: TextStyle(color: Colors.green),
+              decoration: new InputDecoration(
                 hintText: 'Adres email',
+                hintStyle: TextStyle(color: Colors.green),
+                border: new OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(25.0),
+                  borderSide: new BorderSide(
+                  ),
+                ),
               ),
               validator: (String email) {
                 emailInput = email;
@@ -177,9 +212,18 @@ class _LoginState extends State<Login> {
                 return null;
               },
             ),
+            new Padding(padding: EdgeInsets.all(10)),
             TextFormField(
-              decoration: const InputDecoration(
+              style: TextStyle(color: Colors.green),
+              decoration: new InputDecoration(
                 hintText: 'Hasło',
+                hintStyle: TextStyle(color: Colors.green),
+                border: new OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(25.0),
+                  borderSide: new BorderSide(
+                  ),
+
+                ),
               ),
               validator: (String password) {
                 passwordInput = password;

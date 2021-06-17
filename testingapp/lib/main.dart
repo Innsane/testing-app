@@ -61,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return Scaffold(
+            backgroundColor: Color(0xFF1F1F1F),
             appBar: AppBar(
               title: Text(widget.title),
             ),
@@ -69,7 +70,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Zaloguj się, aby rozpocząć.\nJeśli nie masz konta, użyj adresu email do rejestracji.',
+                    'Zaloguj się, aby rozpocząć.\nJeśli nie masz konta, skorzystaj z rejestracji.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.green[300],
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () => loginPressed(false),
