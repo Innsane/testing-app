@@ -61,27 +61,33 @@ class _MyHomePageState extends State<MyHomePage> {
             appBar: AppBar(
               title: Text(widget.title),
             ),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Zaloguj się, aby rozpocząć.\nJeśli nie masz konta, skorzystaj z rejestracji.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.green[300],
+            body: Padding(
+              padding: const EdgeInsets.all(30),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Zaloguj się, aby rozpocząć.\nJeśli nie masz konta, skorzystaj z rejestracji.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.green[300],
+                      ),
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => loginPressed(false),
-                    child: Text('Zaloguj'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => loginPressed(true),
-                    child: Text('Rejestracja'),
-                  ),
-                ],
+                    Container(
+                      margin: EdgeInsets.all(20),
+                      child: ElevatedButton(
+                        onPressed: () => loginPressed(false),
+                        child: Text('Zaloguj'),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => loginPressed(true),
+                      child: Text('Rejestracja'),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

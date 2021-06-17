@@ -202,7 +202,7 @@ class _ShoppingListsScreen extends State<ShoppingListsScreen> {
           );
         },
         child: Icon(Icons.add, color: Colors.grey[900]),
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.green,
       ),
     );
   }
@@ -390,7 +390,7 @@ class _SingleList extends State<SingleList> {
           );
         },
         child: Icon(Icons.add, color: Colors.grey[900]),
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.green,
       ),
     );
   }
