@@ -34,7 +34,6 @@ class _MyHomePageState extends State<MyHomePage> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   loginPressed(isRegister) {
-    print(isRegister);
     Navigator.push(
       context,
       new MaterialPageRoute(
@@ -48,17 +47,14 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      // Initialize FlutterFire:
       future: _initialization,
       builder: (context, snapshot) {
-        // Check for errors
         if (snapshot.hasError) {
           print('Error:');
           print(snapshot);
           return Container();
         }
 
-        // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return Scaffold(
             backgroundColor: Color(0xFF1F1F1F),
@@ -91,7 +87,6 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         }
 
-        // Otherwise, show something whilst waiting for initialization to complete
         return Container();
       },
     );

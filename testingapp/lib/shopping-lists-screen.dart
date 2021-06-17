@@ -43,9 +43,114 @@ class _ShoppingListsScreen extends State<ShoppingListsScreen> {
         child: ListView.builder(
           itemCount: _globalShoppingLists.length,
           itemBuilder: (context, index) => ListTile(
-            trailing: Icon(
-              Icons.edit,
-              color: Colors.red,
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Edytuj przedmiot'),
+                          content: SizedBox(
+                            height: 140,
+                            child: Column(
+                              children: [
+                                TextField(
+                                  controller: _wordController,
+                                  decoration:
+                                      InputDecoration(hintText: 'Np. Grill'),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: 15,
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      setState(() {
+                                        _globalShoppingLists[index] =
+                                            _wordController.text;
+                                      });
+                                    },
+                                    child: Text('Akceptuj'),
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: 15,
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('Anuluj'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Napewno chcesz usunąć ten przedmiot?'),
+                          content: SizedBox(
+                            height: 120,
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: 15,
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      setState(() {
+                                        _globalShoppingLists.removeAt(index);
+                                        _globalShopingListsElements
+                                            .removeAt(index);
+                                      });
+                                    },
+                                    child: Text('Usuń'),
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: 15,
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('Anuluj'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
             onTap: () {
               listClicked(index);
@@ -61,39 +166,40 @@ class _ShoppingListsScreen extends State<ShoppingListsScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Ustaw tytuł listy'),
-                  content: SizedBox(
-                    height: 120,
-                    child: Column(
-                      children: [
-                        TextField(
-                          controller: _wordController,
-                          decoration: InputDecoration(hintText: 'Np. Grill'),
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Ustaw tytuł listy'),
+                content: SizedBox(
+                  height: 120,
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: _wordController,
+                        decoration: InputDecoration(hintText: 'Np. Grill'),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(
+                          top: 15,
                         ),
-                        Container(
-                          padding: EdgeInsets.only(
-                            top: 15,
-                          ),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                _globalShoppingLists.add(_wordController.text);
-                                _globalShopingListsElements.add([]);
-                              });
-                              Navigator.of(context).pop();
-                              _wordController.clear();
-                            },
-                            child: Text('Stwórz'),
-                          ),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              _globalShoppingLists.add(_wordController.text);
+                              _globalShopingListsElements.add([]);
+                            });
+                            Navigator.of(context).pop();
+                            _wordController.clear();
+                          },
+                          child: Text('Stwórz'),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                );
-              });
+                ),
+              );
+            },
+          );
         },
         child: Icon(Icons.add, color: Colors.grey[900]),
         backgroundColor: Colors.pink,
@@ -118,26 +224,122 @@ class _SingleList extends State<SingleList> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_globalShoppingLists[widget.index]),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {
-              print('delete');
-            },
-          ),
-        ],
       ),
       body: Container(
         color: Colors.grey[900],
         child: ListView.builder(
           itemCount: _globalShopingListsElements[widget.index].length,
           itemBuilder: (context, elementsIndex) => ListTile(
-            trailing: Icon(
-              Icons.delete,
-              color: Colors.red,
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Edytuj przedmiot'),
+                          content: SizedBox(
+                            height: 140,
+                            child: Column(
+                              children: [
+                                TextField(
+                                  controller: _wordController,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: 15,
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      setState(() {
+                                        _globalShopingListsElements[
+                                                widget.index][elementsIndex] =
+                                            _wordController.text;
+                                      });
+                                    },
+                                    child: Text('Akceptuj'),
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: 15,
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('Anuluj'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Napewno chcesz usunąć ten przedmiot?'),
+                          content: SizedBox(
+                            height: 120,
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: 15,
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      setState(() {
+                                        _globalShopingListsElements[
+                                                widget.index]
+                                            .removeAt(elementsIndex);
+                                      });
+                                    },
+                                    child: Text('Usuń'),
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: 15,
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('Anuluj'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
             onTap: () {
-              // edytuj
+              // checkmark?
             },
             tileColor: Colors.grey[900],
             title: Text(
@@ -150,40 +352,42 @@ class _SingleList extends State<SingleList> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Dodaj składni do kupienia'),
-                  content: SizedBox(
-                    height: 120,
-                    child: Column(
-                      children: [
-                        TextField(
-                          controller: _wordController,
-                          decoration: InputDecoration(hintText: 'Np. Kiełbasa'),
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Dodaj składni do kupienia'),
+                content: SizedBox(
+                  height: 120,
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: _wordController,
+                        decoration: InputDecoration(hintText: 'Np. Kiełbasa'),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(
+                          top: 15,
                         ),
-                        Container(
-                          padding: EdgeInsets.only(
-                            top: 15,
-                          ),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              var text = _wordController.text;
-                              Navigator.of(context).pop();
-                              _wordController.clear();
-                              setState(() {
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(
+                              () {
                                 _globalShopingListsElements[widget.index]
-                                    .add(text);
-                              });
-                            },
-                            child: Text('Dodaj'),
-                          ),
+                                    .add(_wordController.text);
+                              },
+                            );
+                            Navigator.of(context).pop();
+                            _wordController.clear();
+                          },
+                          child: Text('Dodaj'),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                );
-              });
+                ),
+              );
+            },
+          );
         },
         child: Icon(Icons.add, color: Colors.grey[900]),
         backgroundColor: Colors.pink,
