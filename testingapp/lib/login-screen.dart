@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'todo-screen.dart';
+import 'shopping-lists-screen.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen(this.isRegister, {Key key}) : super(key: key);
@@ -94,7 +94,8 @@ class _RegisterState extends State<Register> {
                           .createUserWithEmailAndPassword(
                               email: emailInput, password: passwordInput);
                       Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (context) => TodoScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => ShoppingListsScreen()),
                           (Route<dynamic> route) => false);
                     } on FirebaseAuthException catch (e) {
                       isError = true;
@@ -113,14 +114,14 @@ class _RegisterState extends State<Register> {
                               'Format adresu email jest nieprawidłowy.';
                         });
                       } else {
-                        print('Pojawił się niespodziewany błąd:');
+                        print('Pojawił się niespodziewany błąd:' + e.code);
                         setState(() {
                           errorMessage =
                               'Pojawił się niespodziewany błąd: ' + e.code;
                         });
                       }
                     } catch (e) {
-                      print('Pojawił się niespodziewany błąd:');
+                      print('Pojawił się niespodziewany błąd:' + e.code);
                       setState(() {
                         errorMessage =
                             'Pojawił się niespodziewany błąd: ' + e.code;
@@ -200,7 +201,8 @@ class _LoginState extends State<Login> {
                       await FirebaseAuth.instance.signInWithEmailAndPassword(
                           email: emailInput, password: passwordInput);
                       Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (context) => TodoScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => ShoppingListsScreen()),
                           (Route<dynamic> route) => false);
                     } on FirebaseAuthException catch (e) {
                       isError = true;
